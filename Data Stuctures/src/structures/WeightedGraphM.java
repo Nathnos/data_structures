@@ -4,39 +4,39 @@ import java.util.ArrayList;
 import algorithms.ListSorting.*;
 
 /*
- * Weighted, Directed graph. Uses edge list representation.
+ * Weighted, Directed graph. Uses adjacency matrix for Edges.
  * Vertex are represented as integers.
+ * Can't add or remove vertex after creation.
  * 
- * Do not add two times the same edge. addEdge() function won't check if it already exists.
- * To change a weight, use the updateEdge() function.
+ * You can add two times the same edge, it will update the weight.
+ * Weight can't be 0, but can be negative. A 0 in the matrix means there's no edge.
  */
 
 
-public abstract class WeightedGraph{
-	private static final int INITIAL_LENGTH = 8;
-	WeigtedGraph graph;
+public class WeightedGraphM extends WeightedGraph {
+	private double[][] adjM;
+	private int nEdge = 0;
 	
-	public WeightedGraph(int size, boolean useList) {
-		if (useList == True)
-			graph = new WeightedGraphL;
-		else
-			graph = new WeightedGraphM;
+	public WeightedGraphM(int size) {
+		adjM = new double[size][size];
 	}
-	public boolean isEmpty();
 	
-	public void addEdge(int source, int destinaiton, double weight);
-	public void updateEdge(int source, int destination, double weight);
+	public void addEdge(int source, int destination, double weight) {
+		if(adjM[source][destination] != 0)
+			nEdge++;
+		adjM[source][destination] = weight;
+	}
 	
-	public int nVertex() {
-		return graph.len();
+	public void updateEdge(int source, int destination, double weight) {
+		adjM[source][destination] = weight;
 	}
 	
 	public int nEdges() {
-		return edgeList.size();
+		return nEdges;
 	}
 	 
-	public WeigtedGraph cloneVertex() {
-		WeigtedGraph wg = new WeigtedGraph();
+	public WeightedGraphM cloneVertex() {
+		WeightedGraphM wg = new WeightedGraphM();
 		wg.graph = this.graph.cloneVertex();
 		return wg;
 	}
@@ -65,8 +65,8 @@ public abstract class WeightedGraph{
 	 * Algorithms :
 	 */
 	
-	public static WeigtedGraph Kruskal(WeigtedGraph wg) {
-		WeigtedGraph T = new WeigtedGraph();
+	public static WeightedGraphM Kruskal(WeightedGraphM wg) {
+		WeightedGraphM T = new WeightedGraphM();
 		T = wg.cloneVertex();
 		wg.sort_edges();
 		int n = T.nVertex();
@@ -74,12 +74,17 @@ public abstract class WeightedGraph{
 		while (T.nEdges() < n-1) {
 			Edge e = wg.edgeList.get(c++);
 			int u = T.find(e.source);
-			int v = T.find(e.destinaiton);
+			int v = T.find(e.destination);
 			if (u != v)
-				T.addEdge(e.source, e.destinaiton, e.weight);
+				T.addEdge(e.source, e.destination, e.weight);
 		}
 		return T;
 	}
+
+	
+	/*
+	 * Work in progress
+	 */
 
 //	public WeightedGraphs Prim(Graph graph) {
 //		WeightedGraphs T = new WeightedGraphs();
