@@ -22,7 +22,3 @@ Some data stuctures and algorithms, in java.
 ## Bag
 - Simple data Structure
 - Knapsack problem variant (can slice), greedy alorithm (not implemented yet)
-
-## HashTable
-- Hash function : h(k) = k mod M
-- Uses open adressing to resolve collision
