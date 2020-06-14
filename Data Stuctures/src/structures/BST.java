@@ -1,10 +1,12 @@
 package structures;
 
+import java.util.ArrayList;
+
 /*
  * BST for any comparable items.
  * 
  * Items can be added and removed at any time.
- * Can't contain similar items - by equals() standard method
+ * Can't contain same Objects (pointers)
  */
 
 public class BST <E extends Comparable<E>> {
@@ -34,7 +36,7 @@ public class BST <E extends Comparable<E>> {
 			return new Node<E>(data);
 		if(data.compareTo(node.data) > 0)
 			node.sup_child = insert(data, node.sup_child);
-		else if (data.compareTo(node.data) == 0 && !data.equals(node.data)) //Not same item
+		else if (data.compareTo(node.data) <= 0 && data != node.data) //Not same item
 			node.infEq_child = insert(data, node.infEq_child);
 		return node;
 	}
@@ -43,20 +45,39 @@ public class BST <E extends Comparable<E>> {
 		return find(elem, root);
 	}
 	
-	//TODO findAll : renvoie une ArrayList
+	public ArrayList<E> findAll(E data) {
+		ArrayList<E> e = new ArrayList<E>();
+		return findAll(data, root, e);
+	}
 	
 	//Return the first matching result.
 	private E find(E data, Node<E> node) {
 		if(node == null)
 			return null;
-		System.out.println("FIND : " + node.data + (node.infEq_child == null) + (node.sup_child == null)
-		+ data.compareTo(node.data));
 		if(data.compareTo(node.data) == 0)
 			return node.data;
 		else if(data.compareTo(node.data) > 0)
 			return find(data, node.sup_child);
 		else
 			return find(data, node.infEq_child);
+	}
+	
+	private ArrayList<E> findAll(E data, Node<E> node, ArrayList<E> list) {
+		if(node == null)
+			return list;
+		if(data.compareTo(node.data) == 0) {
+			while(data.compareTo(node.data) == 0) {
+				list.add(node.data);
+				node = node.infEq_child;
+				if(node==null)
+					break;
+			}
+			return list;
+		}
+		else if(data.compareTo(node.data) > 0)
+			return findAll(data, node.sup_child, list);
+		else
+			return findAll(data, node.infEq_child, list);
 	}
 	
 	public E remove(E elem) {
@@ -93,4 +114,16 @@ public class BST <E extends Comparable<E>> {
 		return findInf(node, node.infEq_child);
 	}
 	
+	public String toString() {
+		return infix("", root);
+	}
+	
+	private String infix(String s, Node<E> node) {
+		if(node.sup_child != null)
+			s = infix(s, node.sup_child);
+		s += node.data.toString();
+		if(node.infEq_child != null)
+			s = infix(s, node.infEq_child);
+		return s;
+	}
 }

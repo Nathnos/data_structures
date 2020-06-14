@@ -10,6 +10,7 @@ public class TreeSearch {
 		tree.add(new Action("Climb", 5000));
 		tree.add(new Action("Homework", -10));
 		System.out.println(tree.find(new Action(null, -10)));
+		System.out.println(tree.findAll(new Action(null, 2000)));
 	}
 	
 	private static class Action implements Comparable<Action> {
