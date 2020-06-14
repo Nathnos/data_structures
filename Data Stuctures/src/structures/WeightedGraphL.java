@@ -16,25 +16,8 @@ public class WeightedGraphL extends WeightedGraph {
 	private static final int INITIAL_LENGTH = 8;
 	private ArrayList<Edge> edgeList;
 	
-	private static class Edge implements Comparable<Edge> {
-		int source, destinaiton;
-		double weight;
-		public Edge(int source, int destinaiton, double weight) {
-			this.source = source;
-			this.destinaiton = destinaiton;
-			this.weight = weight;
-		}
-		@Override
-		public int compareTo(Edge e) {
-			if(weight > e.weight)
-				return 1;
-			if(weight < e.weight)
-				return -1;
-			return 0;
-		}
-		public String toString() {
-			return "(" + source + ", " + destinaiton + ", " + weight + ")";
-		}
+	private class Edge() {
+		
 	}
 	
 	public WeightedGraphL(int size) {

@@ -13,14 +13,33 @@ import algorithms.ListSorting.*;
 
 
 public abstract class WeightedGraph{
+	private static final int INITIAL_LENGTH = 8;
+	WeigtedGraph graph;
+	
+	public WeightedGraph(int size, boolean useList) {
+		if (useList == True)
+			graph = new WeightedGraphL;
+		else
+			graph = new WeightedGraphM;
+	}
 	public boolean isEmpty();
 	
 	public void addEdge(int source, int destinaiton, double weight);
 	public void updateEdge(int source, int destination, double weight);
-	pulbic void removeEdge(int source, int destination);
-
-	public int nEdges();
-
+	
+	public int nVertex() {
+		return graph.len();
+	}
+	
+	public int nEdges() {
+		return edgeList.size();
+	}
+	 
+	public WeigtedGraph cloneVertex() {
+		WeigtedGraph wg = new WeigtedGraph();
+		wg.graph = this.graph.cloneVertex();
+		return wg;
+	}
 	
 	public boolean isTree() {
 		if(graph.len() == 0)
