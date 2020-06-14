@@ -6,39 +6,37 @@ import algorithms.ListSorting.*;
 /*
  * Weighted, undirected graphs.
  * 
- * Uses Adjacency list.
+ * Uses Union-Find and EdgeList.
+ * Vertex are represented as integers. 
  * 
  * Implicit edges are no longer sufficient, since they have a weight.
  * Do not add two times the same edge. addEdge won't check if it already exists.
  */
 
-uses Adjacency list
-
-public class WeightedGraph {
+public class WeightedGraphEL {
 	private static final int INITIAL_LENGTH = 8;
 	private ArrayList<Edge> edgeList;
 	private Graph graph;
 	
-	private static class Vertex implements Comparable<Vertex> {
-		public int cost = Integer.MAX_VALUE;
-		public int from = -1;
-		public final int id;
-		public ArrayList<Vertex> neighbors;
-		public Vertex(int id) {
-			this.id = id;
-			neighbors = new ArrayList<Vertex>();
-		}
-		public void reset() {
-			cost = Integer.MAX_VALUE;
-			from = -1;
+	private static class Edge implements Comparable<Edge> {
+		//NB : there is source and destination, still it's undirected.
+		int source, destinaiton;
+		double weight;
+		public Edge(int source, int destinaiton, double weight) {
+			this.source = source;
+			this.destinaiton = destinaiton;
+			this.weight = weight;
 		}
 		@Override
-		public int compareTo(Vertex v) {
-			if(cost > v.cost)
+		public int compareTo(Edge e) {
+			if(weight > e.weight)
 				return 1;
-			else if (cost == v.cost)
-				return 0;
-			return -1;
+			if(weight < e.weight)
+				return -1;
+			return 0;
+		}
+		public String toString() {
+			return "(" + source + ", " + destinaiton + ", " + weight + ")";
 		}
 	}
 	
@@ -46,12 +44,12 @@ public class WeightedGraph {
 		return graph.isEmpty();
 	}
 	
-	public WeightedGraph(int size) {
+	public WeightedGraphEL(int size) {
 		graph = new Graph(size);
 		edgeList = new ArrayList<Edge>(size);
 	}
 	
-	public WeightedGraph() {
+	public WeightedGraphEL() {
 		this(INITIAL_LENGTH);
 	}
 	
@@ -78,8 +76,8 @@ public class WeightedGraph {
 		return edgeList.size();
 	}
 	 
-	public WeightedGraph cloneVertex() {
-		WeightedGraph wg = new WeightedGraph();
+	public WeightedGraphEL cloneVertex() {
+		WeightedGraphEL wg = new WeightedGraphEL();
 		wg.graph = this.graph.cloneVertex();
 		return wg;
 	}
@@ -108,30 +106,20 @@ public class WeightedGraph {
 	 * Algorithms :
 	 */
 	
-	public static WeightedGraph Prim(WeightedGraph wg) {
-		int n = wg.nVertex();
-		Vertex[] vertexList = new Vertex[n];
-		int[] cost = new int[n];
+	public static WeightedGraphEL Kruskal(WeightedGraphEL wg) {
+		WeightedGraphEL T = new WeightedGraphEL();
+		T = wg.cloneVertex();
+		wg.sort_edges();
+		int n = T.nVertex();
 		int c = 0;
-		for(int i = 0; i < n; i++) {
-			if(wg.graph.exists(i))
-				vertexList[c++] = new Vertex(i);
+		while (T.nEdges() < n-1) {
+			Edge e = wg.edgeList.get(c++);
+			int u = T.find(e.source);
+			int v = T.find(e.destinaiton);
+			if (u != v)
+				T.addEdge(e.source, e.destinaiton, e.weight);
 		}
-		for(Edge e : edgeList) { // add neighbors
-			…;//FAUT LE FAIRE EN AVANCE (garder trace…)
-		}
-		vertexList[0].cost = 0;
-		PQ<Vertex> f = new PQ<Vertex>(false, 4, n); //Min, 4-heap, size n
-		for(int i = 0; i < n; i++)
-			f.insert(vertexList[i]);
-		while(!f.isEmpty()) {
-			Vertex v = f.delete();
-		}
-		return null;
-	}
-
-	public static WeightedGraph Dijkstra(WeightedGraph wg) {
-		return null;
+		return T;
 	}
 
 }
