@@ -1,6 +1,7 @@
 package structures;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 
 import algorithms.ListSorting.*;
@@ -117,19 +118,60 @@ public class WeightedGraph {
 		return T;
 	}
 	
+	private static class Vertex implements Comparable<Vertex> {
+		static double[] cost;
+		int id;
+		public Vertex(int id) {
+			this.id = id;
+		}
+		@Override
+		public int compareTo(Vertex v) {
+			if(cost[id] > cost[v.id])
+				return 1;
+			else if(cost[id] == cost[v.id])
+				return 0;
+			return -1;
+		}
+		@Override
+		public String toString() {
+			return id + ":" + cost[id];
+		}
+	}
+	
 	public static WeightedGraph Prim(WeightedGraph wg) {
-//		PQ<Vertex> f = new PQ<Vertex>(false, 2, n); //Min, binary heap, size n
-//		for(Vertex v : wg.vertexList) {
-//			v.reset();
-//			f.insert(v);
-//		}
-//		Vertex v0 = wg.vertexList.get(0);
-//		v0.cost = 0;
-//		f.update(v0);
-//		while(!f.isEmpty()) {
-//			Vertex v = f.delete();
-//		}
-		return null;
+		int n = wg.nVertex();
+		WeightedGraph T = new WeightedGraph(n);
+		PQ<Vertex> pq = new PQ<Vertex>(false, 2, n); //Min, binary heap, size n
+		Vertex[] vList = new Vertex[n];
+		double[] cost = new double[n];
+		int[] pred = new int[n];
+		Vertex.cost = cost;
+		for(int i = 0; i<n; i++) {
+			cost[i] = Integer.MAX_VALUE;
+			pred[i] = -1;
+			vList[i] = new Vertex(i);
+			pq.insert(vList[i]);
+		}
+		cost[0] = 0;
+		pq.update(vList[0]);
+		while(!pq.isEmpty()) {
+			Vertex v = pq.delete();
+			LinkedList<Edge> edgeList = wg.adjacencyList[v.id];
+			for(Edge e : edgeList) {
+				Vertex u = vList[e.destination];
+				if(pq.isIn(u) && cost[u.id] >= e.weight) {
+					pred[u.id] = v.id;
+					cost[u.id] = e.weight;
+					pq.update(u);
+				}
+			}
+		}
+		for(int i = 0; i<n; i++) {
+			if(pred[i] != -1) {
+				T.addEdge(i, pred[i], cost[i]);
+			}
+		}
+		return T;
 	}
 
 	public static WeightedGraph Dijkstra(WeightedGraph wg) {

@@ -17,5 +17,6 @@ public class MinimalSpanningTree {
 		wg.addEdge(4, 5, 3);
 		System.out.println(wg); // The graph in WG.png
 		System.out.println("Kruskal : " + MST.Kruskal(wg)); // Should give the tree in MST.png
+		System.out.println("Prim : " + MST.Prim(wg)); // Should give the tree in MST.png
 	}
 }

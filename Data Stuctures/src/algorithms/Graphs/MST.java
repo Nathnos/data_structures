@@ -10,13 +10,12 @@ public class MST {
 		return WeightedGraph.Prim(wg);
 	}
 	
-	public static WeightedGraph find(WeightedGraph wg) {
-		return Prim(wg);
-	}
-	
-	
 	public static WeightedGraph Kruskal(WeightedGraph wg) {
 		return WeightedGraph.Kruskal(wg);
+	}
+	
+	public static WeightedGraph find(WeightedGraph wg) {
+		return Kruskal(wg);
 	}
 	
 }

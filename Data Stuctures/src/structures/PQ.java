@@ -19,6 +19,14 @@ public class PQ<E extends Comparable<E>> extends Heap<E> {
 			comparison = -1;
 	}
 	
+	public boolean isIn(E elem) {
+		for(E e : array) {
+			if (e == elem)
+				return true;
+		}
+		return false;
+	}
+	
 	public PQ() {
 		this(false, DEFAULT_ARITY, INITIAL_SIZE);
 	}
@@ -63,7 +71,7 @@ public class PQ<E extends Comparable<E>> extends Heap<E> {
 	private E delete(int i) {
 		E r = array.get(i);
 		E last = array.remove(array.size()-1);
-		if(array.size() > 0)
+		if(array.size() > 0 && i < array.size())
 			sink(last, i);
 		return r;
 	}
