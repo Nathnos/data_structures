@@ -12,20 +12,49 @@ import algorithms.ListSorting.*;
  */
 
 
-public abstract class WeightedGraph{
+public class WeightedGraphL extends WeightedGraph {
 	private static final int INITIAL_LENGTH = 8;
-	WeigtedGraph graph;
+	private ArrayList<Edge> edgeList;
 	
-	public WeightedGraph(int size, boolean useList) {
-		if (useList == True)
-			graph = new WeightedGraphL;
-		else
-			graph = new WeightedGraphM;
+	private class Edge() {
+		
 	}
-	public boolean isEmpty();
 	
-	public void addEdge(int source, int destinaiton, double weight);
-	public void updateEdge(int source, int destination, double weight);
+	public WeightedGraphL(int size) {
+		graph = new Graph(size);
+		edgeList = new ArrayList<Edge>(size);
+	}
+	
+	public WeightedGraphL() {
+		this(INITIAL_LENGTH);
+	}
+	
+	public boolean isEmpty() {
+		return edgeList.isEmpty();
+	}
+	
+	public int find(int x) {
+		return graph.find(x);
+	}
+	
+	public void addVertex(int v) {
+		graph.addVertex(v);
+	}
+	
+	public void addEdge(int source, int destination, double weight) {
+		graph.init(source);
+		graph.init(destination);
+		graph.union(source, destination);
+		edgeList.add(new Edge(source, destination, weight));
+	}
+	
+	public void updateEdge(int source, int destination, double weight) {
+		for(Edge e : edgeList)
+			if(e.source == source && e.destination == destination) {
+				e.weight = weight;
+				break;
+			}
+	}
 	
 	public int nVertex() {
 		return graph.len();
@@ -35,8 +64,8 @@ public abstract class WeightedGraph{
 		return edgeList.size();
 	}
 	 
-	public WeigtedGraph cloneVertex() {
-		WeigtedGraph wg = new WeigtedGraph();
+	public WeightedGraphL cloneVertex() {
+		WeightedGraphL wg = new WeightedGraphL();
 		wg.graph = this.graph.cloneVertex();
 		return wg;
 	}
@@ -65,8 +94,8 @@ public abstract class WeightedGraph{
 	 * Algorithms :
 	 */
 	
-	public static WeigtedGraph Kruskal(WeigtedGraph wg) {
-		WeigtedGraph T = new WeigtedGraph();
+	public static WeightedGraphL Kruskal(WeightedGraphL wg) {
+		WeightedGraphL T = new WeightedGraphL();
 		T = wg.cloneVertex();
 		wg.sort_edges();
 		int n = T.nVertex();
@@ -74,12 +103,17 @@ public abstract class WeightedGraph{
 		while (T.nEdges() < n-1) {
 			Edge e = wg.edgeList.get(c++);
 			int u = T.find(e.source);
-			int v = T.find(e.destinaiton);
+			int v = T.find(e.destination);
 			if (u != v)
-				T.addEdge(e.source, e.destinaiton, e.weight);
+				T.addEdge(e.source, e.destination, e.weight);
 		}
 		return T;
 	}
+
+	
+	/*
+	 * Work in progress
+	 */
 
 //	public WeightedGraphs Prim(Graph graph) {
 //		WeightedGraphs T = new WeightedGraphs();
