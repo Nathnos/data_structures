@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import algorithms.ListSorting.*;
 
 /*
- * Vertex are represented as integers
+ * Weighted, undirected graphs. Uses the edgeList representation.
+ * Vertex are represented as integers. 
  * 
  * Implicit edges are no longer sufficient, since they have a weight.
  * Do not add two times the same edge. addEdge won't check if it already exists.
