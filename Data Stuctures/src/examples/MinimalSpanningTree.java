@@ -1,14 +1,11 @@
 package examples;
 
-import structures.UnionFind;
 import structures.WeightedGraph;
 import algorithms.Graphs.*;
 
 public class MinimalSpanningTree {
 	public static void main(String[] args) {
-		WeightedGraph wg = new WeightedGraph();
-		for(int i = 0; i<6; i++)
-			wg.addVertex(i);
+		WeightedGraph wg = new WeightedGraph(6);
 		wg.addEdge(0, 1, 2);
 		wg.addEdge(0, 2, 8);
 		wg.addEdge(0, 4, 7);

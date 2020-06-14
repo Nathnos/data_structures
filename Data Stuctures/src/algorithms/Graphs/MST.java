@@ -1,8 +1,6 @@
 package algorithms.Graphs;
 
 import structures.WeightedGraph;
-import structures.WeightedGraph;
-
 /*
  * Algorithms to find the minimal spanning tree, from a WeightedGraph.
  */
