@@ -3,7 +3,8 @@ package structures;
 /*
  * Abstraction : each data element has to be associated with a number before feeding him into the UnionFind structure
  * This structure will tell you if two elements belong to same same class. You can join classes and add elements.
- * You need to initialize before making an union. 
+ * 
+ * IMPORTANT : You need to initialize before making an union.
  *
  * Useful structure for connectivity problems
  */

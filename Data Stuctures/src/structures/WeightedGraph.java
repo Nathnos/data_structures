@@ -12,20 +12,15 @@ import algorithms.ListSorting.*;
  * Do not add two times the same edge. addEdge won't check if it already exists.
  */
 
-uses Adjacency list
-
 public class WeightedGraph {
 	private static final int INITIAL_LENGTH = 8;
-	private ArrayList<Edge> edgeList;
-	private Graph graph;
+	private arrayList 
 	
 	private static class Vertex implements Comparable<Vertex> {
 		public int cost = Integer.MAX_VALUE;
-		public int from = -1;
-		public final int id;
+		public int predecessor = -1;
 		public ArrayList<Vertex> neighbors;
-		public Vertex(int id) {
-			this.id = id;
+		public Vertex() {
 			neighbors = new ArrayList<Vertex>();
 		}
 		public void reset() {
@@ -42,54 +37,57 @@ public class WeightedGraph {
 		}
 	}
 	
-	public boolean isEmpty() {
-		return graph.isEmpty();
+	private static class Edge implements Comparable<Edge> {
+		int v1, v2;
+		double weight;
+		public Edge(int v1, int v2, double weight) {
+			this.v2 = v1;
+			this.v2 = v2;
+			this.weight = weight;
+		}
+		@Override
+		public int compareTo(Edge e) {
+			if(weight > e.weight)
+				return 1;
+			if(weight < e.weight)
+				return -1;
+			return 0;
+		}
+		public String toString() {
+			return "(" + v1 + ", " + v2 + ", " + weight + ")";
+		}
 	}
 	
 	public WeightedGraph(int size) {
-		graph = new Graph(size);
+		vertexList = new Vertex[size];
 		edgeList = new ArrayList<Edge>(size);
+		
 	}
 	
 	public WeightedGraph() {
 		this(INITIAL_LENGTH);
 	}
 	
-	public int find(int x) {
-		return graph.find(x);
+	public boolean isEmpty() {
+		return vertexList.isEmpty();
 	}
 	
 	public void addVertex(int v) {
-		graph.addVertex(v);
+		vertexList[v] = new Vertex(v);
 	}
 	
-	public void addEdge(int source, int destinaiton, double weight) {
-		graph.init(source);
-		graph.init(destinaiton);
-		graph.union(source, destinaiton);
-		edgeList.add(new Edge(source, destinaiton, weight));
+	public void addEdge(int v1, int v2, double weight) {
+		vertexList[v1].neighbors.add(vertexList[v2]);
+		vertexList[v1].neighbors.add(vertexList[v1]);
+		edgeList.add(new Edge(v1, v2, weight));
 	}
 	
 	public int nVertex() {
-		return graph.len();
+		return vertexList.size();
 	}
 	
 	public int nEdges() {
 		return edgeList.size();
-	}
-	 
-	public WeightedGraph cloneVertex() {
-		WeightedGraph wg = new WeightedGraph();
-		wg.graph = this.graph.cloneVertex();
-		return wg;
-	}
-	
-	public boolean isTree() {
-		if(graph.len() == 0)
-			return true; //empty graph is a tree
-		if(nEdges() != graph.len() - 1)
-			return false;
-		return graph.isConnex();
 	}
 	
 	public void sort_edges() {
@@ -100,38 +98,47 @@ public class WeightedGraph {
 		return edgeList.toString();
 	}
 	
-	public String toFullString() {
-		return graph.toString() + "\n" + edgeList.toString();
-	}
-	
 	/*
 	 * Algorithms :
 	 */
 	
-	public static WeightedGraph Prim(WeightedGraph wg) {
-		int n = wg.nVertex();
-		Vertex[] vertexList = new Vertex[n];
-		int[] cost = new int[n];
+	public static WeightedGraph Kruskal(WeightedGraph wg) {
+		WeightedGraph T = new WeightedGraph();
+		UnionFind uf = new UnionFind();
+		wg.sort_edges();
+		int n = T.nVertex();
 		int c = 0;
-		for(int i = 0; i < n; i++) {
-			if(wg.graph.exists(i))
-				vertexList[c++] = new Vertex(i);
+		while (T.nEdges() < n-1) {
+			Edge e = wg.edgeList.get(c++);
+			int u = uf.find(e.source);
+			int v = uf.find(e.destinaiton);
+			if (u != v) {
+				T.addEdge(e.source, e.destinaiton, e.weight);
+				uf.init(u);
+				uf.init(v);
+				uf.union(u, v);
+			}
 		}
-		for(Edge e : edgeList) { // add neighbors
-			…;//FAUT LE FAIRE EN AVANCE (garder trace…)
-		}
-		vertexList[0].cost = 0;
-		PQ<Vertex> f = new PQ<Vertex>(false, 4, n); //Min, 4-heap, size n
-		for(int i = 0; i < n; i++)
-			f.insert(vertexList[i]);
-		while(!f.isEmpty()) {
-			Vertex v = f.delete();
-		}
-		return null;
+		return T;
 	}
-
-	public static WeightedGraph Dijkstra(WeightedGraph wg) {
-		return null;
-	}
+	
+//	public static WeightedGraph Prim(WeightedGraph wg) {
+//		PQ<Vertex> f = new PQ<Vertex>(false, 2, n); //Min, binary heap, size n
+//		for(Vertex v : wg.vertexList) {
+//			v.reset();
+//			f.insert(v);
+//		}
+//		Vertex v0 = wg.vertexList.get(0);
+//		v0.cost = 0;
+//		f.update(v0);
+//		while(!f.isEmpty()) {
+//			Vertex v = f.delete();
+//		}
+//		return null;
+//	}
+//
+//	public static WeightedGraph Dijkstra(WeightedGraph wg) {
+//		return null;
+//	}
 
 }

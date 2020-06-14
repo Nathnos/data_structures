@@ -1,7 +1,7 @@
 package algorithms.Graphs;
 
 import structures.WeightedGraph;
-import structures.WeightedGraphEL;
+import structures.WeightedGraph;
 
 /*
  * Algorithms to find the minimal spanning tree, from a WeightedGraph.
@@ -17,12 +17,8 @@ public class MST {
 	}
 	
 	
-	public static WeightedGraphEL Kruskal(WeightedGraphEL wg) {
-		return WeightedGraphEL.Kruskal(wg);
-	}
-	
-	public static WeightedGraphEL find(WeightedGraphEL wg) {
-		return Kruskal(wg);
+	public static WeightedGraph Kruskal(WeightedGraph wg) {
+		return WeightedGraph.Kruskal(wg);
 	}
 	
 }

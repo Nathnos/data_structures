@@ -1,5 +1,6 @@
 package examples;
 
+import structures.UnionFind;
 import structures.WeightedGraph;
 import algorithms.Graphs.*;
 
