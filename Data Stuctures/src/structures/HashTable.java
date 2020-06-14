@@ -13,6 +13,7 @@ public class HashTable<E> {
 	private Array<E> table;
 	private Array<Integer> keys;
 	
+	@SuppressWarnings("hiding")
 	private class Array<E> {
 		private Object[] arr;
 		private int length;

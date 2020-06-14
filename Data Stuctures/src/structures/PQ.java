@@ -37,16 +37,34 @@ public class PQ<E extends Comparable<E>> extends Heap<E> {
 		heapify(this);
 	}
 	
+	public void update(E elem) {
+		int i = -1;
+		for(int c = 0; c < array.size(); c++) {
+			if(array.get(c) == elem) {
+				i = c;
+				break;
+			}
+		}
+		if(i == -1) //elem not in PQ
+			return;
+		delete(i);
+		insert(elem);
+	}
+	
 	public void insert(E elem) {
 		array.add(elem);
 		swim(elem, array.size()-1);
 	}
 	
 	public E delete() {
-		E r = array.get(0);
+		return delete(0);
+	}
+	
+	private E delete(int i) {
+		E r = array.get(i);
 		E last = array.remove(array.size()-1);
 		if(array.size() > 0)
-			sink(last, 0);
+			sink(last, i);
 		return r;
 	}
 	

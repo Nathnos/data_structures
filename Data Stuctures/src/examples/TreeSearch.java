@@ -31,5 +31,5 @@ public class TreeSearch {
 		public String toString() {
 			return action + " : " + value;
 		}
-	  }
+	}
 }

@@ -67,6 +67,10 @@ public class UnionFind {
 		}
 		return y;
 	}
+	
+	public boolean exists(int x) {
+		return parent[x] == -1;
+	}
 
 	private void join(int p, int q) { //Θ(n)
 		//Join two canonical elements

@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import algorithms.ListSorting.*;
 
 /*
- * Weighted, undirected graphs. Uses the edgeList representation.
+ * Weighted, undirected graphs.
+ * 
+ * Uses the Union-Find and EdgeList.
  * Vertex are represented as integers. 
  * 
  * Implicit edges are no longer sufficient, since they have a weight.
@@ -17,6 +19,7 @@ public class WeightedGraph {
 	private Graph graph;
 	
 	private static class Edge implements Comparable<Edge> {
+		//NB : there is source and destination, still it's undirected.
 		int source, destinaiton;
 		double weight;
 		public Edge(int source, int destinaiton, double weight) {
@@ -118,47 +121,43 @@ public class WeightedGraph {
 		}
 		return T;
 	}
-
 	
-	/*
-	 * Work in progress
-	 */
-
-//	public WeightedGraphs Prim(Graph graph) {
-//		WeightedGraphs T = new WeightedGraphs();
-//		int c = 0;
-//		int n = graph.len();
-//		int[] cout_min = new int[n-1];
-//		int[] voisin = new int[n-1];
-//		cout_min[c++] = -1;
-//		for (int i = 2; i<n; i++) {
-//		//voisin[i] =;
-//		}
-//		while(T.len() < n-1) {
-//		break;
-//		}
-//		return T;
-//	}
+	private static class Vertex implements Comparable<Vertex> {
+		public int cost = Integer.MAX_VALUE;
+		public int from = -1;
+		public final int id;
+		public Vertex(int id) {
+			this.id = id;
+		}
+		@Override
+		public int compareTo(Vertex v) {
+			if(cost > v.cost)
+				return 1;
+			else if (cost == v.cost)
+				return 0;
+			return -1;
+		}
+	}
 	
-//	public Dijkstra(matrice L, Graph graph) { //Donne pas tjrs un ACM
-//		//Matrice L représente les poids :L[i, j] le poids
-//		//de l'arrête entre i et j (infini si pas d'arrête)
-//		int[] D = int[n];
-//		int[] P = int[n];
-//		C = {} //Candidats possibles
-//		//on veut que enlever min; voir struct de donnée appropriée
-//		//Tas binaire min ?
-//		//Aussi pouvoir parcourir cette structure :
-//		//ok avec tas binaire, mais ordre arbitraire
-//		for(int i = 0; i<n; i++) {
-//		P[i] = 0
-//		D[i] = ; //Poids de l'arrête, ou infini
-//		}
-//		P[0] = -1; //Aucun voisins
-//		while(C != null) {
-//		int v = C.removeMni();
-//		for w in C
-//		}
-//	}
+	public static WeightedGraph Prim(WeightedGraph wg) {
+		int n = wg.nVertex();
+		Vertex[] vertexList = new Vertex[n];
+		int[] cost = new int[n];
+		int c = 0;
+		for(int i = 0; i < n; i++) {
+			if(wg.graph.exists(i))
+				vertexList[c++] = new Vertex(i);
+		}
+		vertexList[0].cost = 0;
+		PQ f = new PQ(false, 4, n); //Min, 4-heap, size n
+		for(int i = 0; i < n; i++)
+			f.insert(vertexList[i]);
+		
+		return null;
+	}
+
+	public static WeightedGraph Dijkstra(WeightedGraph wg) {
+		return null;
+	}
 
 }

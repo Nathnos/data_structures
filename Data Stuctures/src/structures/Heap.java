@@ -24,6 +24,10 @@ public class Heap<T> {
 		return array.size();
 	}
 	
+	public boolean isEmpty() {
+		return size() == 0;
+	}
+	
 	public int getChild(int i, int k) {
 		return arity*i+ k + 1;
 	}
