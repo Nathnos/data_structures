@@ -1,11 +1,11 @@
 package examples;
 
-import structures.AbsWeigtedGraph;
+import structures.WeightedGraph;
 import algorithms.Graphs.*;
 
 public class MinimalSpanningTree {
 	public static void main(String[] args) {
-		AbsWeigtedGraph wg = new AbsWeigtedGraph();
+		WeightedGraph wg = new WeightedGraph();
 		for(int i = 0; i<6; i++)
 			wg.addVertex(i);
 		wg.addEdge(0, 1, 2);
