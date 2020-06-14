@@ -7,11 +7,11 @@ import structures.WeightedGraph;
  */
 
 public class ShortestPath {
-	public static WeightedGraph Dijkstra(WeightedGraph wg) {
-		return WeightedGraph.Dijkstra(wg);
+	public static WeightedGraph Dijkstra(WeightedGraph wg, int vertex) {
+		return WeightedGraph.Dijkstra(wg, vertex);
 	}
-	public static WeightedGraph find(WeightedGraph wg) {
-		return Dijkstra(wg);
+	public static WeightedGraph find(WeightedGraph wg, int vertex) {
+		return Dijkstra(wg, vertex);
 	}
 	
 }

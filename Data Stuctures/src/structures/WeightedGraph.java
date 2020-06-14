@@ -106,7 +106,6 @@ public class WeightedGraph {
 			uf.init(i);
 		while (T.nEdges() < n-1) {
 			Edge e = wg.edgeList.get(c++);
-			System.out.println(e);
 			int u = uf.find(e.source);
 			int v = uf.find(e.destination);
 			if (u != v) {
@@ -167,14 +166,58 @@ public class WeightedGraph {
 		}
 		for(int i = 0; i<n; i++) {
 			if(pred[i] != -1) {
-				T.addEdge(i, pred[i], cost[i]);
+				T.addEdge(pred[i], i, cost[i]);
 			}
 		}
 		return T;
 	}
 
-	public static WeightedGraph Dijkstra(WeightedGraph wg) {
-		return null;
+	public static WeightedGraph Dijkstra(WeightedGraph wg, int vertex) {
+		int n = wg.nVertex();
+		WeightedGraph T = new WeightedGraph(n);
+		PQ<Vertex> pq = new PQ<Vertex>(false, 2, n); //Min, binary heap, size n
+		Vertex[] vList = new Vertex[n];
+		double[] cost = new double[n];
+		int[] pred = new int[n];
+		Vertex.cost = cost;
+		for(int i = 0; i<n; i++) {
+			cost[i] = Integer.MAX_VALUE;
+			pred[i] = -1;
+			vList[i] = new Vertex(i);
+			pq.insert(vList[i]);
+		}
+		cost[vertex] = 0;
+		pq.update(vList[vertex]);
+		while(!pq.isEmpty()) {
+			Vertex v = pq.delete();
+			LinkedList<Edge> edgeList = wg.adjacencyList[v.id];
+			Edge min = edgeList.get(0);
+			for(Edge e : edgeList) {
+				Vertex u = vList[e.destination];
+				if(pq.isIn(u) && e.weight <= cost[u.id]) {
+					min = e;
+					pred[u.id] = v.id;
+					cost[u.id] = e.weight;
+					pq.update(u);
+				}
+			}
+			//Now we update weight for vertices around the newly added.
+			int minID = min.destination;
+			edgeList = wg.adjacencyList[minID];
+			for(Edge e : edgeList) {
+				Vertex u = vList[e.destination];
+				if(pq.isIn(u) && cost[minID] + e.weight < cost[u.id]) {
+					cost[u.id] = cost[minID] + e.weight;
+					pred[u.id] = minID;
+				}
+			}
+		}
+		for(int i = 0; i<n; i++) {
+			if(pred[i] != -1) {
+				T.addEdge(i, pred[i], cost[i]);
+			}
+		}
+		return T;
 	}
 
 }

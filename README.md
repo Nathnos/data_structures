@@ -11,7 +11,7 @@ Some data stuctures and algorithms, in java.
 - Data structure based on UnionFind
 - Implementation of WeightedGraphs
 - Minimal Spannig Tree (MST) with Kruskal and Prim algorithms
-- Shortest Path with Dijkstra algorithm (not implemented yet)
+- Shortest Path with Dijkstra algorithm
 
 ## N-Heaps
 - Priority Queue : based on Heap Class, uses an ArrayList. Can update.
