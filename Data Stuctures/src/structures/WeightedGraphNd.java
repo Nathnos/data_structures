@@ -4,17 +4,18 @@ import java.util.ArrayList;
 import algorithms.ListSorting.*;
 
 /*
- * Weighted, Directed graph. Uses edge list representation.
+ * Weighted, Not Directed graph. Uses adjacency matrix for Edges.
  * Vertex are represented as integers.
+ * Can't add or remove vertex after creation.
  * 
- * Do not add two times the same edge. addEdge() function won't check if it already exists.
- * To change a weight, use the updateEdge() function.
+ * You can add two times the same edge, it will update the weight.
+ * Weight can't be 0, but can be negative. A 0 in the matrix means there's no edge.
  */
 
-
-public class WeightedGraphL extends WeightedGraph {
+public class WeightedGraphNd extends WeightedGraph {
 	private static final int INITIAL_LENGTH = 8;
 	private ArrayList<Edge> edgeList;
+	private Graph graph;
 	
 	private static class Edge implements Comparable<Edge> {
 		int source, destinaiton;
@@ -37,17 +38,17 @@ public class WeightedGraphL extends WeightedGraph {
 		}
 	}
 	
-	public WeightedGraphL(int size) {
+	public boolean isEmpty() {
+		return graph.isEmpty();
+	}
+	
+	public WeightedGraphNd(int size) {
 		graph = new Graph(size);
 		edgeList = new ArrayList<Edge>(size);
 	}
 	
-	public WeightedGraphL() {
+	public WeightedGraphNd() {
 		this(INITIAL_LENGTH);
-	}
-	
-	public boolean isEmpty() {
-		return edgeList.isEmpty();
 	}
 	
 	public int find(int x) {
@@ -58,19 +59,11 @@ public class WeightedGraphL extends WeightedGraph {
 		graph.addVertex(v);
 	}
 	
-	public void addEdge(int source, int destination, double weight) {
+	public void addEdge(int source, int destinaiton, double weight) {
 		graph.init(source);
-		graph.init(destination);
-		graph.union(source, destination);
-		edgeList.add(new Edge(source, destination, weight));
-	}
-	
-	public void updateEdge(int source, int destination, double weight) {
-		for(Edge e : edgeList)
-			if(e.source == source && e.destination == destination) {
-				e.weight = weight;
-				break;
-			}
+		graph.init(destinaiton);
+		graph.union(source, destinaiton);
+		edgeList.add(new Edge(source, destinaiton, weight));
 	}
 	
 	public int nVertex() {
@@ -81,11 +74,7 @@ public class WeightedGraphL extends WeightedGraph {
 		return edgeList.size();
 	}
 	 
-	public WeightedGraphL cloneVertex() {
-		WeightedGraphL wg = new WeightedGraphL();
-		wg.graph = this.graph.cloneVertex();
-		return wg;
-	}
+
 	
 	public boolean isTree() {
 		if(graph.len() == 0)
@@ -111,18 +100,23 @@ public class WeightedGraphL extends WeightedGraph {
 	 * Algorithms :
 	 */
 	
-	public static WeightedGraphL Kruskal(WeightedGraphL wg) {
-		WeightedGraphL T = new WeightedGraphL();
-		T = wg.cloneVertex();
+	private WeightedGraphNd cloneVertex() {
+		WeightedGraphNd wg = new WeightedGraphNd();
+		wg.graph = this.graph.cloneVertex();
+		return wg;
+	}
+	
+	public static WeightedGraphNd Kruskal(WeightedGraphNd wg) {
+		WeightedGraphNd T = wg.cloneVertex();
 		wg.sort_edges();
 		int n = T.nVertex();
 		int c = 0;
 		while (T.nEdges() < n-1) {
 			Edge e = wg.edgeList.get(c++);
 			int u = T.find(e.source);
-			int v = T.find(e.destination);
+			int v = T.find(e.destinaiton);
 			if (u != v)
-				T.addEdge(e.source, e.destination, e.weight);
+				T.addEdge(e.source, e.destinaiton, e.weight);
 		}
 		return T;
 	}
