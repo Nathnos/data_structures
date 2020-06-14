@@ -20,7 +20,6 @@ public abstract class WeightedGraph{
 	pulbic void removeEdge(int source, int destination);
 
 	public int nEdges();
-
 	
 	public boolean isTree() {
 		if(graph.len() == 0)
