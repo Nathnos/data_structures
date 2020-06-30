@@ -3,6 +3,8 @@ package structures.graphs;
 import structures.UnionFind;
 
 /*
+ * Undirected graph. Tells you if two edges are connected (Union Find)
+ * 
  * Vertex are integers
  *
  * Application of UnionFind. Elements are vertex, and edges are connections.
