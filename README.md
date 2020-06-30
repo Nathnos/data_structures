@@ -13,11 +13,13 @@ Some data stuctures and algorithms, in java.
 - Minimal Spannig Tree (MST) with Kruskal and Prim algorithms
 - Shortest Path with Dijkstra algorithm
 
-## N-Heaps
+## Queues
+- Queue : simple queue, for any Object.
 - Priority Queue : based on Heap Class, uses an ArrayList. Can update.
 
 ## Trees
 - Binary Search Tree (BST)
+- Tree traversal : Breadth-first and Depth-first search
 
 ## Bag
 - Simple data Structure
