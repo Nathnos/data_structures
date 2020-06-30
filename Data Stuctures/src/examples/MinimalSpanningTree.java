@@ -1,7 +1,7 @@
 package examples;
 
-import structures.WeightedGraph;
 import algorithms.Graphs.*;
+import structures.graphs.WeightedGraph;
 
 public class MinimalSpanningTree {
 	public static void main(String[] args) {

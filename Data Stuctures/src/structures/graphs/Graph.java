@@ -1,4 +1,6 @@
-package structures;
+package structures.graphs;
+
+import structures.UnionFind;
 
 /*
  * Vertex are integers
@@ -6,7 +8,7 @@ package structures;
  * Application of UnionFind. Elements are vertex, and edges are connections.
  * Vertex and edges cannot be removed.
  *
- * You don't need to initilize vertex before adding edges.
+ * You don't need to initialize vertex before adding edges.
  */
 
 public class Graph extends UnionFind {

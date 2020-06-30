@@ -1,6 +1,8 @@
-package structures;
+package structures.queues;
 
 import java.util.ArrayList;
+
+import structures.Heap;
 
 /*
  * Priority Queue with no access to the inner ArrayList.

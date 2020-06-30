@@ -1,6 +1,6 @@
 package examples;
 
-import structures.BST;
+import structures.trees.BST;
 
 public class TreeSearch {
 	public static void main(String[] args) {
@@ -11,6 +11,7 @@ public class TreeSearch {
 		tree.add(new Action("Homework", -10));
 		System.out.println(tree.find(new Action(null, -10)));
 		System.out.println(tree.findAll(new Action(null, 2000)));
+		tree.breadth_first_search();
 	}
 	
 	private static class Action implements Comparable<Action> {

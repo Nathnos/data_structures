@@ -1,9 +1,6 @@
 package algorithms.Graphs;
 
-import structures.WeightedGraph;
-/*
- * Algorithms to find the minimal spanning tree, from a WeightedGraph.
- */
+import structures.graphs.WeightedGraph;
 
 public class MST {
 	public static WeightedGraph Prim(WeightedGraph wg) {

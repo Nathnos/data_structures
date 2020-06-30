@@ -1,7 +1,8 @@
 package algorithms.ListSorting;
 
 import java.util.ArrayList;
-import structures.PQ;
+
+import structures.queues.PQ;
 
 /*
  * A tool class for QuickSort Algorithm.

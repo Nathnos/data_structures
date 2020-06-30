@@ -1,9 +1,11 @@
-package structures;
+package structures.graphs;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 
 import algorithms.ListSorting.*;
+import structures.UnionFind;
+import structures.queues.PQ;
 
 /*
  * Weighted, undirected graph.

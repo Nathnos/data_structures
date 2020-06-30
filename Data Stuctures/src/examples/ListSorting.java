@@ -21,9 +21,10 @@ public class ListSorting {
     
     System.out.println("\nJava array :");
     Integer[] array2 = {9, 4, 1, 32, 7, 23};
-    print_arr(InsertionSort.sort(array2, ascending));
-    System.out.println(HeapSort.sort(array2, ascending));
-    print_arr(QuickSort.sort(array2, ascending));
+    //print_arr(InsertionSort.sort(array2, ascending));
+    //System.out.println(HeapSort.sort(array2, ascending));
+    //print_arr(QuickSort.sort(array2, ascending));
+    print_arr(MergeSort.sort(array2, ascending));
     
     
     System.out.println("\nBig test :");

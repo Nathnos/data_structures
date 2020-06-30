@@ -1,6 +1,6 @@
 package examples;
 
-import structures.PQ;
+import structures.queues.PQ;
 
 public class PQUpdate {
 	public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package structures;
+package structures.trees;
 
 import java.util.ArrayList;
 
@@ -9,15 +9,20 @@ import java.util.ArrayList;
  * Can't contain same Objects (pointers)
  */
 
-public class BST <E extends Comparable<E>> {
+public class BST <E extends Comparable<E>> extends Tree {
 	private Node<E> root;
 	
 	private static class Node <E extends Comparable<E>> {
 		Node<E> infEq_child, sup_child;
+		boolean marked = false;
 		E data;
 		
 		public Node(E data) {
 			this.data = data;
+		}
+		
+		public String toString() {
+			return data.toString();
 		}
 	}
 	
@@ -125,5 +130,49 @@ public class BST <E extends Comparable<E>> {
 		if(node.infEq_child != null)
 			s = infix(s, node.infEq_child);
 		return s;
+	}
+
+	/*
+	 * Generic tree functions :
+	 */
+	
+	@Override
+	protected Object getRoot() {
+		return root;
+	}
+
+	@Override
+	protected ArrayList<Object> getChild(Object node) {
+		@SuppressWarnings("unchecked")
+		Node<E> n = (Node<E>) node;
+		ArrayList<Object> child = new ArrayList<Object>();
+		if(n.infEq_child != null)
+			child.add(n.infEq_child);
+		if(n.sup_child != null)
+			child.add(n.sup_child);
+		return child;
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	protected void mark(Object node) {
+		((Node<E>) node).marked = true;
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	protected boolean isMarked(Object node) {
+		return ((Node<E>) node).marked;
+	}
+
+	@Override
+	protected void resetMarks() {
+		resetMarksRec(root);
+	}
+	
+	private void resetMarksRec(Node<E> node) {
+		node.marked = false;
+		resetMarksRec(node.sup_child);
+		resetMarksRec(node.infEq_child);
 	}
 }
