@@ -6,7 +6,9 @@ import java.util.ArrayList;
  * BST for any comparable items.
  * 
  * Items can be added and removed at any time.
- * Can't contain same Objects (pointers)
+ * Can't contain same Objects (pointers)nœuds
+ * 
+ * WORK IN PROGRESS (not implemented yet) : Use a balance system to prevent the tree from being too deep.
  */
 
 public class BST <E extends Comparable<E>> extends Tree {
@@ -95,7 +97,7 @@ public class BST <E extends Comparable<E>> extends Tree {
 		if(data.compareTo(node.data) == 0 && data.equals(node.data)) {
 			E elem = node.data;
 			delete(data, parent, node);
-			return elem; 
+			return elem;
 		}
 		else if (data.compareTo(node.data) > 0)
 			return remove(data, node, node.sup_child);
@@ -106,7 +108,7 @@ public class BST <E extends Comparable<E>> extends Tree {
 	private void delete(E data, Node<E> parent, Node<E> node) {
 		//Is 'node' the infEq_child or sup_child of parent?
 		if((parent.sup_child.data).compareTo(node.data) == 0)
-			parent.sup_child = findInf(parent, node);
+			parent.sup_child = findInf(parent, node); //Find the min to replace the node
 		else
 			parent.infEq_child = findInf(parent, node);
 	}
@@ -171,6 +173,8 @@ public class BST <E extends Comparable<E>> extends Tree {
 	}
 	
 	private void resetMarksRec(Node<E> node) {
+		if(node==null)
+			return;
 		node.marked = false;
 		resetMarksRec(node.sup_child);
 		resetMarksRec(node.infEq_child);

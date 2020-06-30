@@ -12,6 +12,9 @@ public class TreeSearch {
 		System.out.println(tree.find(new Action(null, -10)));
 		System.out.println(tree.findAll(new Action(null, 2000)));
 		tree.breadth_first_search();
+		tree.depth_first_search_pre();
+		tree.depth_first_search_in();
+		tree.depth_first_search_post();
 	}
 	
 	private static class Action implements Comparable<Action> {
