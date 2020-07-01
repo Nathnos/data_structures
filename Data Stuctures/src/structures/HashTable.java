@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 /*
  * Hash function : h(k) = k mod M
- * Uses open adressing to resolve collision
+ * Uses open addressing to resolve collision
  */
 
 public class HashTable<E> {
@@ -119,6 +119,18 @@ public class HashTable<E> {
 	
 	public String toString() {
 		return table.toString();
+	}
+	
+	/*
+	 * Tools for convert Objects to int (generate key with the data) :
+	 */
+	
+	public static int stringToInt(String s) {
+		byte[] infoBin = "yolo".getBytes();
+		int sum = 0;
+		for(byte b : infoBin)
+			sum += Integer.valueOf(Integer.toBinaryString((char) b));
+		return sum;
 	}
 	
 }

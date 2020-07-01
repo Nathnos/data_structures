@@ -18,6 +18,17 @@ public class DirectedGraphs {
 		graph.addVertex(2);
 		graph.auto_clean();
 		System.out.println(graph);
+		
+		DirGraph web = new DirGraph();
+		web.addEdge(1, 2);
+		web.addEdge(1, 3);
+		web.addEdge(1, 4);
+		web.addEdge(2, 1);
+		web.addEdge(4, 3);
+		web.addEdge(4, 5);
+		web.addEdge(5, 2);
+		web.addEdge(5, 3);
+		web.addEdge(5, 4);
+		web.breadth_first_search(1);
 	}
-
 }

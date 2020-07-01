@@ -1,11 +1,14 @@
+
 package structures.graphs;
 
 import java.util.ArrayList;
 
 import algorithms.ListSorting.QuickSort;
+import structures.queues.FIFO;
 
 /*
  * 	Directed graph.
+ *  Vertices can't be marked.
  * 
  *  You should not add twice the same edge or vertex. If so, you can use auto_clean() method.
  */
@@ -20,6 +23,7 @@ public class DirGraph {
 	
 	private static class Vertex implements Comparable<Vertex> {
 		int id;
+		boolean mark = false;
 		ArrayList<Vertex> neighbors;
 		public Vertex(int id) {
 			neighbors = new ArrayList<Vertex>();
@@ -161,14 +165,38 @@ public class DirGraph {
 	
 	@Override
 	public String toString() {
-		return "Vertices : " + vertexList.toString() + "\n Edges : " + edgeList.toString();
+		return "Vertices : " + vertexList.toString() + "\nEdges : " + edgeList.toString();
+	}
+	
+	public void resetMarks() {
+		for(Vertex v : vertexList)
+			v.mark = false;
 	}
 	
 	/*
 	 * Algorithms :
 	 */
 	
-	public void webCrawler() {
-		return;
+	public void breadth_first_search(Vertex root) {
+		Vertex vertex = root;
+		FIFO<Vertex> queue = new FIFO<Vertex>();
+		resetMarks();
+		vertex.mark = true;
+		queue.push(vertex);
+		while(!queue.isEmpty()) {
+			vertex = queue.pop();
+			System.out.print(vertex + " ");
+			for(Vertex v : vertex.neighbors) {
+				if(!v.mark) {
+					queue.push(v);
+					v.mark = true;
+				}
+			}
+		}
+		System.out.println();
+	}
+	
+	public void breadth_first_search(int id) {
+		breadth_first_search(findVertex(id));
 	}
 }

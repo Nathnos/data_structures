@@ -2,7 +2,7 @@ package structures.trees;
 
 import java.util.ArrayList;
 
-import structures.queues.Stack;
+import structures.queues.FIFO;
 
 /*
  * 
@@ -21,7 +21,7 @@ public abstract class Tree {
 	 */
 	
 	public void breadth_first_search() {
-		Stack<Object> queue = new Stack<Object>();
+		FIFO<Object> queue = new FIFO<Object>();
 		Object node = getRoot();
 		resetMarks();
 		queue.push(node);
