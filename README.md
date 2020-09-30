@@ -1,5 +1,5 @@
 # Data Structures
-Some data structures and algorithms, in java.
+Implementation of optimized data stuctures in Java.
 
 ## List Sorting
 - InsertionSort (for small arrays)
